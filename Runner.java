@@ -30,10 +30,23 @@ public class Runner {
 
         double avgChange = ((change.get(change.size()-1))-change.get(0)) / change.size();
         double avgIncreaseInChange = 0;
-        for (double ch : change) {
+        ArrayList<Double> changeOfChange = new ArrayList<Double>();
+        
+        for (int i=0; i<change.size()-1;i++) {
+            avgChange += change.get(i);
+            changeOfChange.add(change.get(i+1) - change.get(i));
+        }
+        avgChange += change.get(change.size()-1);
+        avgChange /= change.size();
+
+        for (double ch : changeOfChange) {
             avgIncreaseInChange += ch;
         }
-        avgIncreaseInChange /= change.size();
+
+        avgIncreaseInChange /= changeOfChange.size();
+
+
+        avgChange /= change.size();
 
         System.out.println("The average change is " + avgChange + " and the average increase in the change is " + avgIncreaseInChange);
 
