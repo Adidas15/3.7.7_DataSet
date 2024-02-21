@@ -28,7 +28,7 @@ public class Runner {
             change.add(specToCountry.get(i+1).getTotal() - specToCountry.get(i).getTotal());
         }
 
-        double avgChange = ((change.get(change.size()-1))-change.get(0)) / change.size();
+        double avgChange = 0;
         double avgIncreaseInChange = 0;
         ArrayList<Double> changeOfChange = new ArrayList<Double>();
         
