@@ -12,7 +12,7 @@ public class Runner {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the country you want: ");
-        String country = sc.next();
+        String country = sc.nextLine();
 
         ArrayList<CountryEm> specToCountry = new ArrayList<CountryEm>();
         
