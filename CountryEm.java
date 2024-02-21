@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class CountryEm {
 
     private String name;
@@ -41,4 +43,62 @@ public class CountryEm {
     public boolean rightCountry(String c) {
         return (name.equals(c) || abr.equals(c));
     }
+
+    
+
+    public static ArrayList<CountryEm> makeCountrySpec(String country, ArrayList<CountryEm> allEntries) {
+        ArrayList<CountryEm> specToCountry = new ArrayList<CountryEm>();
+        for (CountryEm cE : allEntries) {
+            if (cE.rightCountry(country) && cE.getTotal() > 0 && cE.getYear()>1975) {
+                specToCountry.add(cE);
+            }
+        }
+        return specToCountry;
+    }
+
+
+    public static double predictedEmission(ArrayList<CountryEm> specToCountry, int year) {
+        ArrayList<Double> change = new ArrayList<Double>();
+        for (int i=0; i<specToCountry.size()-1;i++) {
+            //System.out.println(CE.getYear() + ": " + CE.getTotal());
+            change.add(specToCountry.get(i+1).getTotal() - specToCountry.get(i).getTotal());
+        }
+
+        double avgChange = 0;
+        double avgIncreaseInChange = 0;
+        ArrayList<Double> changeOfChange = new ArrayList<Double>();
+        
+        for (int i=0; i<change.size()-1;i++) {
+            avgChange += change.get(i);
+            changeOfChange.add(change.get(i+1) - change.get(i));
+        }
+        avgChange += change.get(change.size()-1);
+        avgChange /= change.size();
+
+        for (double ch : changeOfChange) {
+            avgIncreaseInChange += ch;
+        }
+
+        avgIncreaseInChange /= changeOfChange.size();
+
+
+        avgChange /= change.size();
+
+        System.out.println("The average change is " + avgChange + " and the average increase in the change is " + avgIncreaseInChange);
+
+        //System.out.println("What year do you want to predict?");
+        //int predictYear = sc.nextInt();
+
+        double predictedForYear = specToCountry.get(specToCountry.size()-1).getTotal();
+
+        for (int y=0; y<year-2020; y++) {
+            predictedForYear += avgChange + (avgIncreaseInChange*y);
+        }
+
+        return predictedForYear;
+    }
+
 }
+
+
+

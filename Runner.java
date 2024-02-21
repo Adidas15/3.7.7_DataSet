@@ -14,14 +14,15 @@ public class Runner {
         System.out.println("Enter the country you want: ");
         String country = sc.nextLine();
 
-        ArrayList<CountryEm> specToCountry = new ArrayList<CountryEm>();
+        ArrayList<CountryEm> specToCountry = CountryEm.makeCountrySpec(country, allEntries);
         
-        for (CountryEm cE : allEntries) {
+        /*for (CountryEm cE : allEntries) {
             if (cE.rightCountry(country) && cE.getTotal() > 0 && cE.getYear()>1975) {
                 specToCountry.add(cE);
             }
-        }
+        }*/
 
+        /*
         ArrayList<Double> change = new ArrayList<Double>();
         for (int i=0; i<specToCountry.size()-1;i++) {
             //System.out.println(CE.getYear() + ": " + CE.getTotal());
@@ -49,15 +50,18 @@ public class Runner {
         avgChange /= change.size();
 
         System.out.println("The average change is " + avgChange + " and the average increase in the change is " + avgIncreaseInChange);
-
+*/
         System.out.println("What year do you want to predict?");
         int predictYear = sc.nextInt();
 
+        /*
         double predictedForYear = specToCountry.get(specToCountry.size()-1).getTotal();
 
         for (int y=0; y<predictYear-2020; y++) {
             predictedForYear += avgChange + (avgIncreaseInChange*y);
-        }
+        }*/
+
+        double predictedForYear = CountryEm.predictedEmission(specToCountry, predictYear);
 
         System.out.println(predictedForYear + " million metric tons of CO2 is predicted to be released in the year " + predictYear + " by " + country);
 
