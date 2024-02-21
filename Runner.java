@@ -59,7 +59,7 @@ public class Runner {
             predictedForYear += avgChange + (avgIncreaseInChange*y);
         }
 
-        System.out.println(predictedForYear + " million metric tons of CO2 is predicted to be released in the year " + predictYear);
+        System.out.println(predictedForYear + " million metric tons of CO2 is predicted to be released in the year " + predictYear + " by " + country);
 
         
 
