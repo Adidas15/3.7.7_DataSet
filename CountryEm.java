@@ -57,8 +57,9 @@ public class CountryEm {
     }
 
 
-    public static double predictedEmission(ArrayList<CountryEm> specToCountry, int year) {
+    public static ArrayList<PredictedCountry> predictedEmission(ArrayList<CountryEm> specToCountry, int year) {
         ArrayList<Double> change = new ArrayList<Double>();
+        ArrayList<PredictedCountry> pred = new ArrayList<PredictedCountry>();
         for (int i=0; i<specToCountry.size()-1;i++) {
             //System.out.println(CE.getYear() + ": " + CE.getTotal());
             change.add(specToCountry.get(i+1).getTotal() - specToCountry.get(i).getTotal());
@@ -91,11 +92,13 @@ public class CountryEm {
 
         double predictedForYear = specToCountry.get(specToCountry.size()-1).getTotal();
 
-        for (int y=0; y<year-2020; y++) {
+        for (int y=0; y<year-2021; y++) {
             predictedForYear += avgChange + (avgIncreaseInChange*y);
+            pred.add(new PredictedCountry(y+2022, predictedForYear));
+
         }
 
-        return predictedForYear;
+        return pred;
     }
 
 }

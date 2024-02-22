@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class Runner {
     public static ArrayList<CountryEm> allEntries;
     public static String country;
+    public static int predictYear;
+    public static ArrayList<PredictedCountry> predictedForYear;
     public static void main(String[] args) {
         DataSource ds =DataSource.connectAs("CSV", "emissiondata.csv");
         ds.load();
@@ -20,13 +22,13 @@ public class Runner {
         
         
         System.out.println("What year do you want to predict?");
-        int predictYear = sc.nextInt();
+        predictYear = sc.nextInt();
 
        
 
-        double predictedForYear = CountryEm.predictedEmission(specToCountry, predictYear);
+        predictedForYear = CountryEm.predictedEmission(specToCountry, predictYear);
 
-        System.out.println(predictedForYear + " million metric tons of CO2 is predicted to be released in the year " + predictYear + " by " + country);
+        System.out.println(predictedForYear.get(predictedForYear.size()-1) + " million metric tons of CO2 is predicted to be released in the year " + predictYear + " by " + country);
 
         Graph.main(args);
 
