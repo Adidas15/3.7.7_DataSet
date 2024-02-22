@@ -84,7 +84,7 @@ public class CountryEm {
 
         avgChange /= change.size();
 
-        System.out.println("The average change is " + avgChange + " and the average increase in the change is " + avgIncreaseInChange);
+        System.out.println("The average change per year is " + avgChange + " (mmt) and the average increase in the change is " + avgIncreaseInChange + " (mmt)");
 
         //System.out.println("What year do you want to predict?");
         //int predictYear = sc.nextInt();

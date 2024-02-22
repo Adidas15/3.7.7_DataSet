@@ -3,20 +3,38 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Runner {
+    public static ArrayList<CountryEm> allEntries;
+    public static String country;
     public static void main(String[] args) {
         DataSource ds =DataSource.connectAs("CSV", "emissiondata.csv");
         ds.load();
         //ds.printUsageString();
 
-        ArrayList<CountryEm> allEntries = ds.fetchList("CountryEm", "Country", "ISO 3166-1 alpha-3", "Year", "Total", "Coal","Oil","Gas","Cement","Flaring","Other","Per Capita");
+        allEntries = ds.fetchList("CountryEm", "Country", "ISO 3166-1 alpha-3", "Year", "Total", "Coal","Oil","Gas","Cement","Flaring","Other","Per Capita");
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the country you want: ");
-        String country = sc.nextLine();
+        country = sc.nextLine();
 
         ArrayList<CountryEm> specToCountry = CountryEm.makeCountrySpec(country, allEntries);
         
-        /*for (CountryEm cE : allEntries) {
+        
+        System.out.println("What year do you want to predict?");
+        int predictYear = sc.nextInt();
+
+       
+
+        double predictedForYear = CountryEm.predictedEmission(specToCountry, predictYear);
+
+        System.out.println(predictedForYear + " million metric tons of CO2 is predicted to be released in the year " + predictYear + " by " + country);
+
+        Graph.main(args);
+
+    }
+}
+
+
+/*for (CountryEm cE : allEntries) {
             if (cE.rightCountry(country) && cE.getTotal() > 0 && cE.getYear()>1975) {
                 specToCountry.add(cE);
             }
@@ -51,21 +69,11 @@ public class Runner {
 
         System.out.println("The average change is " + avgChange + " and the average increase in the change is " + avgIncreaseInChange);
 */
-        System.out.println("What year do you want to predict?");
-        int predictYear = sc.nextInt();
 
-        /*
+
+ /*
         double predictedForYear = specToCountry.get(specToCountry.size()-1).getTotal();
 
         for (int y=0; y<predictYear-2020; y++) {
             predictedForYear += avgChange + (avgIncreaseInChange*y);
         }*/
-
-        double predictedForYear = CountryEm.predictedEmission(specToCountry, predictYear);
-
-        System.out.println(predictedForYear + " million metric tons of CO2 is predicted to be released in the year " + predictYear + " by " + country);
-
-        
-
-    }
-}
