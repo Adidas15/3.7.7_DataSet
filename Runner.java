@@ -7,6 +7,7 @@ public class Runner {
     public static String country;
     public static int predictYear;
     public static ArrayList<PredictedCountry> predictedForYear;
+    public static ArrayList<CountryEm> specToCountry;
     public static void main(String[] args) {
         DataSource ds =DataSource.connectAs("CSV", "emissiondata.csv");
         ds.load();
@@ -18,12 +19,20 @@ public class Runner {
         System.out.println("Enter the country you want: ");
         country = sc.nextLine();
 
-        ArrayList<CountryEm> specToCountry = CountryEm.makeCountrySpec(country, allEntries);
+        specToCountry = CountryEm.makeCountrySpec(country, allEntries);
+        while (specToCountry == null) {
+            System.out.println("Invalid. Enter the country you want: ");
+            country = sc.nextLine();
+            specToCountry = CountryEm.makeCountrySpec(country, allEntries);
+        }
         
         
         System.out.println("What year do you want to predict?");
         predictYear = sc.nextInt();
-
+        while (predictYear <= 2021) {
+            System.out.println("Predict something in the future: ");
+            predictYear = sc.nextInt();
+        }
        
 
         predictedForYear = CountryEm.predictedEmission(specToCountry, predictYear);

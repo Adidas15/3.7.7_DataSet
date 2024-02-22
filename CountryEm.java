@@ -44,16 +44,27 @@ public class CountryEm {
         return (name.equals(c) || abr.equals(c));
     }
 
+    public static boolean doesCountryExist(String country, ArrayList<CountryEm> allEntries) {
+        for (CountryEm c : allEntries) {
+            if (c.name.equals(country) || c.abr.equals(country)) {
+                return true;
+            }
+        }
+        return false;
+    }
     
 
     public static ArrayList<CountryEm> makeCountrySpec(String country, ArrayList<CountryEm> allEntries) {
-        ArrayList<CountryEm> specToCountry = new ArrayList<CountryEm>();
-        for (CountryEm cE : allEntries) {
-            if (cE.rightCountry(country) && cE.getTotal() > 0 && cE.getYear()>1975) {
-                specToCountry.add(cE);
+        if (doesCountryExist(country, allEntries)) {
+            ArrayList<CountryEm> specToCountry = new ArrayList<CountryEm>();
+            for (CountryEm cE : allEntries) {
+                if (cE.rightCountry(country) && cE.getTotal() > 0 && cE.getYear()>1975) {
+                    specToCountry.add(cE);
+                }
             }
+            return specToCountry;
         }
-        return specToCountry;
+        return null;
     }
 
 
